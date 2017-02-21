@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/1 - Hospital.Database/1 - Hospital.Database.jfm
