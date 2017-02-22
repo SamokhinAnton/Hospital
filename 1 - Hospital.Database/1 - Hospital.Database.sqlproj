@@ -58,5 +58,28 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="dbo" />
+    <Folder Include="dbo\Tables" />
+    <Folder Include="Programmability" />
+    <Folder Include="Programmability\Stored Procedures" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Patients.sql" />
+    <Build Include="dbo\Tables\Doctors.sql" />
+    <Build Include="dbo\Tables\PatientsDoctors.sql" />
+    <Build Include="dbo\Tables\Diseases.sql" />
+    <Build Include="Programmability\Stored Procedures\CreatePatient.sql" />
+    <Build Include="Programmability\Stored Procedures\UpdatePatient.sql" />
+    <Build Include="Programmability\Stored Procedures\DeletePatient.sql" />
+    <Build Include="Programmability\Stored Procedures\GetAllPatients.sql" />
+    <Build Include="Programmability\Stored Procedures\CreateDoctor.sql" />
+    <Build Include="Programmability\Stored Procedures\GetAllDoctors.sql" />
+    <Build Include="Programmability\Stored Procedures\UpdateDoctor.sql" />
+    <Build Include="Programmability\Stored Procedures\DeleteDoctor.sql" />
+    <Build Include="Programmability\Stored Procedures\GetPatient.sql" />
+    <Build Include="Programmability\Stored Procedures\GetDoctor.sql" />
+    <Build Include="Programmability\Stored Procedures\GetPatientDoctors.sql" />
+    <Build Include="Programmability\Stored Procedures\CreateDoctorPatient.sql" />
+    <Build Include="Programmability\Stored Procedures\GetPatientDiseasesHistory.sql" />
   </ItemGroup>
 </Project>
