@@ -9,6 +9,6 @@ namespace Hospital.Core.Doctors
     public interface IDoctorsRepositoryAsync<T> : IRepositoryAsync<T>
         where T : class
     {
-
+        Task<IEnumerable<T>> GetPatientDoctors(int id);
     }
 }

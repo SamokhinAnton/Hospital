@@ -1,4 +1,5 @@
 ﻿using Hospital.Core.Doctors.Models;
+using Hospital.Core.Patients.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,30 +8,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hospital.Core.Doctors
+namespace Hospital.Core.Patients
 {
-    public class ADODoctorsRepositoryAsync : RepositoryAsync<DoctorDto>, 
-        IDoctorsRepositoryAsync<DoctorDto>
+    public class ADOPatientsRepositoryAsync : RepositoryAsync<PatientDto>,
+        IPatientsRepositoryAsync<PatientDto>
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["HospitalContext"].ConnectionString;
 
-        public async override Task CreateAsync(DoctorDto model)
+        public async override Task CreateAsync(PatientDto model)
         {
-            string sql = "exec [dbo].[CreateDoctor] @name, @specialization";
+            string sql = "exec [dbo].[CreatePatient] @name, @birthdate";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = connection.CreateCommand())
             {
                 connection.Open();
                 command.CommandText = sql;
                 command.Parameters.AddWithValue("name", model.Name);
-                command.Parameters.AddWithValue("specialization", model.Specialization);
+                command.Parameters.AddWithValue("birthdate", model.Birthdate);
                 await command.ExecuteNonQueryAsync();
             }
         }
 
         public async override Task DeleteAsync(int id)
         {
-            string sql = "exec [dbo].[DeleteDoctor] @id";
+            string sql = "exec [dbo].[DeletePatient] @id";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -41,10 +42,10 @@ namespace Hospital.Core.Doctors
             }
         }
 
-        public async override Task<IEnumerable<DoctorDto>> GetAllAsync()
+        public async override Task<IEnumerable<PatientDto>> GetAllAsync()
         {
-            var doctors = new List<DoctorDto>();
-            string sql = "exec [dbo].[GetAllDoctors]";
+            var patients = new List<PatientDto>();
+            string sql = "exec [dbo].[GetAllPatients]";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -54,28 +55,28 @@ namespace Hospital.Core.Doctors
                 {
                     while (reader.Read())
                     {
-                        var doctor = await Task.Run(() => DoctorParser(reader));
-                        doctors.Add(doctor);
+                        var patient = await Task.Run(() => PatientParser(reader));
+                        patients.Add(patient);
                     }
                 }
-                return doctors;
+                return patients;
             }
         }
 
-        public DoctorDto DoctorParser(SqlDataReader reader)
+        public PatientDto PatientParser(SqlDataReader reader)
         {
-            var doctor = new DoctorDto()
+            var patient = new PatientDto()
             {
                 Id = reader.GetInt32(0),
                 Name = reader.GetString(1),
-                Specialization = reader.GetString(2)
+                Birthdate = reader.GetDateTime(2)
             };
-            return doctor;
+            return patient;
         }
 
-        public async override Task<DoctorDto> GetByIdAsync(int id)
+        public async override Task<PatientDto> GetByIdAsync(int id)
         {
-            string sql = "exec [dbo].[GetDoctor] @id";
+            string sql = "exec [dbo].[GetPatient] @id";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -85,15 +86,15 @@ namespace Hospital.Core.Doctors
                 using (var reader = await command.ExecuteReaderAsync())
                 {
                     reader.Read();
-                    var doctor = await Task.Run(() => DoctorParser(reader));
-                    return doctor;
+                    var patient = await Task.Run(() => PatientParser(reader));
+                    return patient;
                 }
             }
         }
 
-        public async override Task UpdateAsync(DoctorDto model)
+        public async override Task UpdateAsync(PatientDto model)
         {
-            string sql = "exec [dbo].[UpdateDoctor] @id, @name, @specialization";
+            string sql = "exec [dbo].[UpdatePatient] @id, @name, @birthdate";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             using (SqlCommand command = connection.CreateCommand())
             {
@@ -101,30 +102,8 @@ namespace Hospital.Core.Doctors
                 command.CommandText = sql;
                 command.Parameters.AddWithValue("id", model.Id);
                 command.Parameters.AddWithValue("name", model.Name);
-                command.Parameters.AddWithValue("specialization", model.Specialization);
+                command.Parameters.AddWithValue("birthdate", model.Birthdate);
                 await command.ExecuteNonQueryAsync();
-            }
-        }
-
-        public async Task<IEnumerable<DoctorDto>> GetPatientDoctors(int id)
-        {
-            var doctors = new List<DoctorDto>();
-            string sql = "exec [dbo].[GetPatientDoctors] @id";
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            using (SqlCommand command = connection.CreateCommand())
-            {
-                connection.Open();
-                command.CommandText = sql;
-                command.Parameters.AddWithValue("id", id);
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    while (reader.Read())
-                    {
-                        var doctor = await Task.Run(() => DoctorParser(reader));
-                        doctors.Add(doctor);
-                    }
-                }
-                return doctors;
             }
         }
     }

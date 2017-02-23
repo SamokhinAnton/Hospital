@@ -10,6 +10,9 @@ namespace Hospital.Core.Doctors
     class EFDoctorsRepositoryAsync : RepositoryAsync<DoctorDto>,
         IDoctorsRepositoryAsync<DoctorDto>
     {
-
+        public Task<IEnumerable<DoctorDto>> GetPatientDoctors(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
