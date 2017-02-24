@@ -1,7 +1,14 @@
 ﻿@model IEnumerable<Hospital.Core.Doctors.Models.DoctorDto>
-@{ 
-    var a = ViewData["IsPatient"];
+
+@{
+    ViewBag.Title = "AddDoctor";
 }
+
+<h2>AddDoctor</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -21,10 +28,8 @@
         <td>
             @Html.DisplayFor(modelItem => item.Specialization)
         </td>
-
         <td>
-            @Html.ActionLink("Details", "Details", "Doctors", new { id=item.Id }, null) |
-            @Ajax.ActionLink("Remove", "Remove", "Patients", new { patientId = Url.RequestContext.RouteData.Values["id"], doctorId = item.Id }, new AjaxOptions { Confirm = "Do you want to remove doctor?", HttpMethod="Post", OnSuccess="location.reload();"})
+            @Html.ActionLink("Add", "AddToPatient", new { doctorId = item.Id, patientId = Url.RequestContext.RouteData.Values["id"] })
         </td>
     </tr>
 }

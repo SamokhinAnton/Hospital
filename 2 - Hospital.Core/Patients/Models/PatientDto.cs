@@ -1,4 +1,5 @@
-﻿using Hospital.Core.Doctors.Models;
+﻿using Hospital.Core.Diseases.Models;
+using Hospital.Core.Doctors.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,6 +23,8 @@ namespace Hospital.Core.Patients.Models
 
 
         public IEnumerable<DoctorDto> Doctors { get; set; }
+
+        public IEnumerable<DiseaseDto> Diseases { get; set; }
 
     }
 }

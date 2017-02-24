@@ -10,5 +10,9 @@ namespace Hospital.Core.Doctors
         where T : class
     {
         Task<IEnumerable<T>> GetPatientDoctors(int id);
+
+        Task<IEnumerable<T>> GetNotPatientDoctors(int id);
+
+        Task AddDoctorToPatient(int doctorId, int pacientId);
     }
 }

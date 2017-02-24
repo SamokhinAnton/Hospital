@@ -58,5 +58,17 @@ namespace Hospital.WebApp.Controllers
             return View(result);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> AddDoctor(int id)
+        {
+            var result = await repository.GetNotPatientDoctors(id);
+            return View(result);
+        }
+
+        public async Task<ActionResult> AddToPatient(int patientId, int doctorId)
+        {
+            await repository.AddDoctorToPatient(doctorId: doctorId, pacientId: patientId);
+            return RedirectToAction("Details", "Patients", new { id = patientId});
+        }
     }
 }

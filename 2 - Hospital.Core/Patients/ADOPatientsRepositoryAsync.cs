@@ -106,5 +106,19 @@ namespace Hospital.Core.Patients
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task RemoveDoctor(int patientId, int doctorId)
+        {
+            string sql = "exec [dbo].[DeleteDoctorFromPatient] @patientId, @doctorId";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("patientId", patientId);
+                command.Parameters.AddWithValue("doctorId", doctorId);
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }

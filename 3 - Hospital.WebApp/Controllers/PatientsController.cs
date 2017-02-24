@@ -99,5 +99,12 @@ namespace Hospital.WebApp.Controllers
                 return View();
             }
         }
+
+        public async Task Remove(int patientId, int doctorId)
+        {
+            await repository.RemoveDoctor(patientId, doctorId);
+        }
+
+
     }
 }

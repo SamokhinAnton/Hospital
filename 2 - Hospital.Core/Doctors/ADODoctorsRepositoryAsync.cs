@@ -127,5 +127,41 @@ namespace Hospital.Core.Doctors
                 return doctors;
             }
         }
+
+        public async Task<IEnumerable<DoctorDto>> GetNotPatientDoctors(int id)
+        {
+            var doctors = new List<DoctorDto>();
+            string sql = "exec [dbo].[GetNotPatientDoctors] @id";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("id", id);
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (reader.Read())
+                    {
+                        var doctor = await Task.Run(() => DoctorParser(reader));
+                        doctors.Add(doctor);
+                    }
+                }
+                return doctors;
+            }
+        }
+
+        public async Task AddDoctorToPatient(int doctorId, int pacientId)
+        {
+            string sql = "exec [dbo].[CreateDoctorPatient] @patientId, @doctorId";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("patientId", pacientId);
+                command.Parameters.AddWithValue("doctorId", doctorId);
+                await command.ExecuteNonQueryAsync();
+            }
+        }
     }
 }

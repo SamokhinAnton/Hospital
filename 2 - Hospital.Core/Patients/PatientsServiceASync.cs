@@ -1,4 +1,6 @@
-﻿using Hospital.Core.Doctors;
+﻿using Hospital.Core.Diseases;
+using Hospital.Core.Diseases.Models;
+using Hospital.Core.Doctors;
 using Hospital.Core.Doctors.Models;
 using Hospital.Core.Patients.Models;
 using System;
@@ -15,16 +17,20 @@ namespace Hospital.Core.Patients
 
         IDoctorsRepositoryAsync<DoctorDto> _doctorsRepository;
 
-        public PatientsServiceAsync(IPatientsRepositoryAsync<PatientDto> patientsRepository, IDoctorsRepositoryAsync<DoctorDto> doctorsRepository)
+        IDiseasesRepositoryAsync<DiseaseDto> _diseasesRepository;
+
+        public PatientsServiceAsync(IPatientsRepositoryAsync<PatientDto> patientsRepository, IDoctorsRepositoryAsync<DoctorDto> doctorsRepository, IDiseasesRepositoryAsync<DiseaseDto> diseasesRepository)
         {
             this._patientsRepository = patientsRepository;
             this._doctorsRepository = doctorsRepository;
+            this._diseasesRepository = diseasesRepository;
         }
 
         public async Task<PatientDto> GetByIdAsync(int id)
         {
             var patient = await _patientsRepository.GetByIdAsync(id);
             patient.Doctors = await _doctorsRepository.GetPatientDoctors(id);
+            patient.Diseases = await _diseasesRepository.GetPatientDiseases(id);
             return patient;
         }
     }

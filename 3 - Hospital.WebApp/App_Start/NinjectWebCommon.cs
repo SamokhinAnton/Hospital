@@ -14,6 +14,8 @@ namespace Hospital.WebApp.App_Start
     using Core.Doctors.Models;
     using Core.Patients;
     using Core.Patients.Models;
+    using Core.Diseases;
+    using Core.Diseases.Models;
 
     public static class NinjectWebCommon 
     {
@@ -68,6 +70,7 @@ namespace Hospital.WebApp.App_Start
             kernel.Bind<IDoctorsRepositoryAsync<DoctorDto>>().To<ADODoctorsRepositoryAsync>();
             kernel.Bind<IPatientsRepositoryAsync<PatientDto>>().To<ADOPatientsRepositoryAsync>();
             kernel.Bind<IPatientsServiceAsync<PatientDto>>().To<PatientsServiceAsync>();
+            kernel.Bind<IDiseasesRepositoryAsync<DiseaseDto>>().To<ADODiseasesRepositoryAsync>();
         }        
     }
 }

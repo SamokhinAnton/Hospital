@@ -9,6 +9,6 @@ namespace Hospital.Core.Patients
     public interface IPatientsRepositoryAsync<T> : IRepositoryAsync<T> 
          where T: class
     {
-        
+        Task RemoveDoctor(int patientId, int doctorId);
     }
 }

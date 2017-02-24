@@ -28,9 +28,22 @@
         <dt>
             @Html.DisplayNameFor(model => model.Doctors)
         </dt>
-        @{
-            Html.RenderPartial("_DoctorsPartial", Model.Doctors, new ViewDataDictionary { { "IsPatient", "true" } });
-        }
+        <dd>
+            <p>
+                @Html.ActionLink("Add New", "AddDoctor", "Doctors", new { id = Model.Id }, null)
+            </p>
+            @{
+                Html.RenderPartial("_DoctorsPartial", Model.Doctors);
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Diseases)
+        </dt>
+        <dd>
+            @{
+                Html.RenderPartial("_DiseasePartial", Model.Diseases);
+            }
+        </dd>
     </dl>
 </div>
 <p>

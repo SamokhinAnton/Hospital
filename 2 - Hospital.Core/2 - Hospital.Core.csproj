@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diseases\ADODiseasesRepositoryAsync.cs" />
+    <Compile Include="Diseases\IDiseasesRepositoryAsync.cs" />
+    <Compile Include="Diseases\Models\DiseaseDto.cs" />
     <Compile Include="Doctors\ADODoctorsRepositoryAsync.cs" />
     <Compile Include="Doctors\EFDoctorsRepositoryAsync.cs" />
     <Compile Include="Doctors\IDoctorsRepositoryAsync.cs" />
