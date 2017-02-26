@@ -71,6 +71,7 @@ namespace Hospital.WebApp.App_Start
             kernel.Bind<IPatientsRepositoryAsync<PatientDto>>().To<ADOPatientsRepositoryAsync>();
             kernel.Bind<IPatientsServiceAsync<PatientDto>>().To<PatientsServiceAsync>();
             kernel.Bind<IDiseasesRepositoryAsync<DiseaseDto>>().To<ADODiseasesRepositoryAsync>();
+            kernel.Bind<IDoctorServiceAsync<DoctorDto>>().To<DoctorServiceAsync>();
         }        
     }
 }

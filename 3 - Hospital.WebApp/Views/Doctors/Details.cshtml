@@ -25,7 +25,22 @@
         <dd>
             @Html.DisplayFor(model => model.Specialization)
         </dd>
-
+        <dt>
+            @Html.DisplayNameFor(model => model.Patients)
+        </dt>
+        <dd id="patients">
+            @{ 
+                Html.RenderPartial("_PatientsPartial", Model.Patients);
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Diseases)
+        </dt>
+        <dd id="diseases">
+            @{
+                Html.RenderPartial("_DiseasesPartial", Model.Diseases);
+            }
+        </dd>
     </dl>
 </div>
 <p>

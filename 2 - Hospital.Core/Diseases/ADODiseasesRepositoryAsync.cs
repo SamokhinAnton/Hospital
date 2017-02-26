@@ -1,4 +1,5 @@
 ﻿using Hospital.Core.Diseases.Models;
+using Hospital.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,7 +15,7 @@ namespace Hospital.Core.Diseases
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["HospitalContext"].ConnectionString;
 
-        public async Task<IEnumerable<DiseaseDto>> GetPatientDiseases(int patientId)
+        public async Task<IEnumerable<DiseaseDto>> GetPatientDiseasesAsync(int patientId)
         {
             var diseases = new List<DiseaseDto>();
             string sql = "exec [dbo].[GetPatientDiseasesHistory] @id";
@@ -28,7 +29,7 @@ namespace Hospital.Core.Diseases
                 {
                     while (reader.Read())
                     {
-                        var disieas = await DiseaseParser(reader);
+                        var disieas = await ParserExtension.DiseaseParser(reader);
                         diseases.Add(disieas);
                     }
                 }
@@ -36,18 +37,58 @@ namespace Hospital.Core.Diseases
             }
         }
 
-        private async Task<DiseaseDto> DiseaseParser(SqlDataReader reader)
+        public override async Task CreateAsync(DiseaseDto model)
         {
-            var disease = new DiseaseDto
+            string sql = "exec [dbo].[CreateDisease] @patientId, @doctorId, @name, @startAt";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
             {
-                Id = await reader.GetFieldValueAsync<int>(0),
-                PatientId = await reader.GetFieldValueAsync<int>(1),
-                DoctorId = await reader.GetFieldValueAsync<int>(2),
-                Name = await reader.GetFieldValueAsync<string>(3),
-                StartAt = await reader.GetFieldValueAsync<DateTime>(4),
-                EndAt = await reader.IsDBNullAsync(5) ? null : await reader.GetFieldValueAsync<DateTime?>(5)
-            };
-            return disease;
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("patientId", model.PatientId);
+                command.Parameters.AddWithValue("doctorId", model.DoctorId);
+                command.Parameters.AddWithValue("name", model.Name);
+                command.Parameters.AddWithValue("startAt", model.StartAt);
+                await command.ExecuteNonQueryAsync();
+            }
         }
+
+        public async Task CloseDiseaseAsync(int id, DateTime endAt)
+        {
+            string sql = "exec [dbo].[CloseDisease] @id, @endAt";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("id", id);
+                command.Parameters.AddWithValue("endAt", endAt);
+                await command.ExecuteNonQueryAsync();
+            }
+        }
+
+
+        public async Task<IEnumerable<DiseaseDto>> GetDoctorDiseasesAsync(int doctorId)
+        {
+            var diseases = new List<DiseaseDto>();
+            string sql = "exec [dbo].[GetDoctorDiseases] @doctorId";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("doctorId", doctorId);
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (reader.Read())
+                    {
+                        var disieas = await ParserExtension.DiseaseParser(reader);
+                        diseases.Add(disieas);
+                    }
+                }
+                return diseases;
+            }
+        }
+
     }
 }

@@ -10,17 +10,22 @@ namespace Hospital.Core.Doctors
     class EFDoctorsRepositoryAsync : RepositoryAsync<DoctorDto>,
         IDoctorsRepositoryAsync<DoctorDto>
     {
-        public Task AddDoctorToPatient(int doctorId, int pacientId)
+        public Task AddDoctorToPatientAsync(int doctorId, int pacientId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<DoctorDto>> GetNotPatientDoctors(int id)
+        public Task<IEnumerable<DoctorDto>> GetNotPatientDoctorsAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<DoctorDto>> GetPatientDoctors(int id)
+        public Task<IEnumerable<DoctorDto>> GetPatientDoctorsAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemovePatientAsync(int doctorId, int pacientId)
         {
             throw new NotImplementedException();
         }

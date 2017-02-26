@@ -102,7 +102,7 @@ namespace Hospital.WebApp.Controllers
 
         public async Task Remove(int patientId, int doctorId)
         {
-            await repository.RemoveDoctor(patientId, doctorId);
+            await repository.RemoveDoctorAsync(patientId, doctorId);
         }
 
 

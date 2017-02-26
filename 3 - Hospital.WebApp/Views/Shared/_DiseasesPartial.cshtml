@@ -17,6 +17,7 @@
             @Html.DisplayNameFor(model => model.EndAt)
         </th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -34,10 +35,19 @@
             @Html.DisplayFor(modelItem => item.StartAt)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EndAt)
+            @if (!item.EndAt.HasValue)
+            {
+                @Html.TextBoxFor(model => item.EndAt)
+            } else
+            { 
+                @Html.DisplayFor(modelItem => item.EndAt)
+            }
         </td>
         <td>
-
+            @if (!item.EndAt.HasValue)
+            {
+                @Ajax.ActionLink("Close", "Close", "Diseases", new { id = item.Id  },  new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "diseases" }, new { });
+            }
         </td>
     </tr>
 }

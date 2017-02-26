@@ -83,5 +83,9 @@
     <Build Include="Programmability\Stored Procedures\GetPatientDiseasesHistory.sql" />
     <Build Include="Programmability\Stored Procedures\DeleteDoctorFromPatient.sql" />
     <Build Include="Programmability\Stored Procedures\GetNotPatientDoctors.sql" />
+    <Build Include="Programmability\Stored Procedures\GetDoctorPatients.sql" />
+    <Build Include="Programmability\Stored Procedures\CreateDisease.sql" />
+    <Build Include="Programmability\Stored Procedures\CloseDisease.sql" />
+    <Build Include="Programmability\Stored Procedures\GetDoctorDiseases.sql" />
   </ItemGroup>
 </Project>

@@ -182,7 +182,8 @@
     <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Shared\_DoctorsPartial.cshtml" />
     <Content Include="Views\Doctors\AddDoctor.cshtml" />
-    <Content Include="Views\Shared\_DiseasePartial.cshtml" />
+    <Content Include="Views\Shared\_DiseasesPartial.cshtml" />
+    <Content Include="Views\Shared\_PatientsPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

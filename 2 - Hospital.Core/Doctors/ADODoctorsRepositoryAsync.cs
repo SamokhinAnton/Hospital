@@ -1,4 +1,6 @@
-﻿using Hospital.Core.Doctors.Models;
+﻿using Hospital.Core.Diseases.Models;
+using Hospital.Core.Doctors.Models;
+using Hospital.Core.Patients.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hospital.Core.Utilities;
 
 namespace Hospital.Core.Doctors
 {
@@ -54,23 +57,12 @@ namespace Hospital.Core.Doctors
                 {
                     while (reader.Read())
                     {
-                        var doctor = await Task.Run(() => DoctorParser(reader));
+                        var doctor = await ParserExtension.DoctorParser(reader);
                         doctors.Add(doctor);
                     }
                 }
                 return doctors;
             }
-        }
-
-        public DoctorDto DoctorParser(SqlDataReader reader)
-        {
-            var doctor = new DoctorDto()
-            {
-                Id = reader.GetInt32(0),
-                Name = reader.GetString(1),
-                Specialization = reader.GetString(2)
-            };
-            return doctor;
         }
 
         public async override Task<DoctorDto> GetByIdAsync(int id)
@@ -85,7 +77,7 @@ namespace Hospital.Core.Doctors
                 using (var reader = await command.ExecuteReaderAsync())
                 {
                     reader.Read();
-                    var doctor = await Task.Run(() => DoctorParser(reader));
+                    var doctor = await ParserExtension.DoctorParser(reader);
                     return doctor;
                 }
             }
@@ -106,7 +98,7 @@ namespace Hospital.Core.Doctors
             }
         }
 
-        public async Task<IEnumerable<DoctorDto>> GetPatientDoctors(int id)
+        public async Task<IEnumerable<DoctorDto>> GetPatientDoctorsAsync(int id)
         {
             var doctors = new List<DoctorDto>();
             string sql = "exec [dbo].[GetPatientDoctors] @id";
@@ -120,7 +112,7 @@ namespace Hospital.Core.Doctors
                 {
                     while (reader.Read())
                     {
-                        var doctor = await Task.Run(() => DoctorParser(reader));
+                        var doctor = await ParserExtension.DoctorParser(reader);
                         doctors.Add(doctor);
                     }
                 }
@@ -128,7 +120,7 @@ namespace Hospital.Core.Doctors
             }
         }
 
-        public async Task<IEnumerable<DoctorDto>> GetNotPatientDoctors(int id)
+        public async Task<IEnumerable<DoctorDto>> GetNotPatientDoctorsAsync(int id)
         {
             var doctors = new List<DoctorDto>();
             string sql = "exec [dbo].[GetNotPatientDoctors] @id";
@@ -142,7 +134,7 @@ namespace Hospital.Core.Doctors
                 {
                     while (reader.Read())
                     {
-                        var doctor = await Task.Run(() => DoctorParser(reader));
+                        var doctor = await ParserExtension.DoctorParser(reader);
                         doctors.Add(doctor);
                     }
                 }
@@ -150,7 +142,7 @@ namespace Hospital.Core.Doctors
             }
         }
 
-        public async Task AddDoctorToPatient(int doctorId, int pacientId)
+        public async Task AddDoctorToPatientAsync(int doctorId, int pacientId)
         {
             string sql = "exec [dbo].[CreateDoctorPatient] @patientId, @doctorId";
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -159,6 +151,20 @@ namespace Hospital.Core.Doctors
                 connection.Open();
                 command.CommandText = sql;
                 command.Parameters.AddWithValue("patientId", pacientId);
+                command.Parameters.AddWithValue("doctorId", doctorId);
+                await command.ExecuteNonQueryAsync();
+            }
+        }
+
+        public async Task RemovePatientAsync(int patientId, int doctorId)
+        {
+            string sql = "exec [dbo].[DeleteDoctorFromPatient] @patientId, @doctorId";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("patientId", patientId);
                 command.Parameters.AddWithValue("doctorId", doctorId);
                 await command.ExecuteNonQueryAsync();
             }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hospital.Core.Diseases.Models;
+using Hospital.Core.Patients.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,5 +20,9 @@ namespace Hospital.Core.Doctors.Models
         [Required]
         [StringLength(128, MinimumLength = 3)]
         public string Specialization { get; set; }
+
+        public IEnumerable<PatientDto> Patients { get; set; }
+
+        public IEnumerable<DiseaseDto> Diseases { get; set; }
     }
 }
