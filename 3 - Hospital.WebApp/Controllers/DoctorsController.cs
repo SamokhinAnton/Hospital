@@ -80,9 +80,17 @@ namespace Hospital.WebApp.Controllers
         public async Task<ActionResult> Remove(int patientId, int doctorId)
         {
             await _doctorsRepository.RemovePatientAsync(patientId, doctorId);
+            var result = await _doctorService.GetByIdAsync(doctorId);
+            ViewData.Add("IsDoctorPage","True");
+            return PartialView("_PatientsPartial", result.Patients);
+        }
 
-            var result = _patientsRepository.GetDoctorPatientsAsync(doctorId);
-            return PartialView("_PatientsPartial", result);
+        [HttpPost]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _doctorsRepository.DeleteAsync(id);
+            var result = await _doctorsRepository.GetAllAsync();
+            return PartialView("_DoctorsPartial", result);
         }
 
     }

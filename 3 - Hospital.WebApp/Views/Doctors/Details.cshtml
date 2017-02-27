@@ -30,7 +30,7 @@
         </dt>
         <dd id="patients">
             @{ 
-                Html.RenderPartial("_PatientsPartial", Model.Patients);
+                Html.RenderPartial("_PatientsPartial", Model.Patients, new ViewDataDictionary { { "IsDoctorPage", "True" } });
             }
         </dd>
         <dt>
@@ -38,7 +38,7 @@
         </dt>
         <dd id="diseases">
             @{
-                Html.RenderPartial("_DiseasesPartial", Model.Diseases);
+                Html.RenderPartial("_DiseasesPartial", Model.Diseases, new ViewDataDictionary { { "IsDoctorPage", "True" } } );
             }
         </dd>
     </dl>

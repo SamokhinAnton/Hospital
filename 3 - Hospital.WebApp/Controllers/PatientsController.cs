@@ -78,31 +78,20 @@ namespace Hospital.WebApp.Controllers
             }
         }
 
-        // GET: Patients/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Patients/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public async Task Remove(int patientId, int doctorId)
+        public async Task<ActionResult> Remove(int patientId, int doctorId)
         {
             await repository.RemoveDoctorAsync(patientId, doctorId);
+            var result = await service.GetByIdAsync(patientId);
+            ViewData.Add("IsPatientPage", "True");
+            return PartialView("_DoctorsPartial", result.Doctors);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await repository.DeleteAsync(id);
+            var result = await repository.GetAllAsync();
+            return PartialView("_PatientsPartial", result);
         }
 
 

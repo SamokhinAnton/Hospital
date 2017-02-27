@@ -22,6 +22,7 @@ namespace Hospital.Core.Diseases.Models
 
         public DateTime? EndAt { get; set; }
 
+        public string ProfileName { get; set; }
 
         public IEnumerable<PatientDto> Patients { get; set; }
 

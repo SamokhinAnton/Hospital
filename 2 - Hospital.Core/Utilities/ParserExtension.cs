@@ -35,6 +35,7 @@ namespace Hospital.Core.Utilities
                 Name = await reader.GetFieldValueAsync<string>(3),
                 StartAt = await reader.GetFieldValueAsync<DateTime>(4),
                 EndAt = await reader.IsDBNullAsync(5) ? null : await reader.GetFieldValueAsync<DateTime?>(5),
+                ProfileName = await reader.GetFieldValueAsync<string>(6),
                 Doctors = new List<DoctorDto>(),
                 Patients = new List<PatientDto>()
             };

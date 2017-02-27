@@ -32,16 +32,18 @@
             <p>
                 @Html.ActionLink("Add New", "AddDoctor", "Doctors", new { id = Model.Id }, null)
             </p>
-            @{
-                Html.RenderPartial("_DoctorsPartial", Model.Doctors);
-            }
+            <div id="doctors">
+                @{
+                    Html.RenderPartial("_DoctorsPartial", Model.Doctors, new ViewDataDictionary { { "IsPatientPage", "True" } });
+                }
+            </div>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Diseases)
         </dt>
         <dd>
             @{
-                Html.RenderPartial("_DiseasesPartial", Model.Diseases);
+                Html.RenderPartial("_DiseasesPartial", Model.Diseases, new ViewDataDictionary { { "IsPatientPage", "True" } });
             }
         </dd>
     </dl>
