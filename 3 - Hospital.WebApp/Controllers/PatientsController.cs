@@ -94,6 +94,10 @@ namespace Hospital.WebApp.Controllers
             return PartialView("_PatientsPartial", result);
         }
 
-
+        public async Task<ActionResult> Search(string pattern)
+        {
+            var result = await repository.SearchAsync(pattern);
+            return PartialView("_PatientsPartial", result);
+        }
     }
 }

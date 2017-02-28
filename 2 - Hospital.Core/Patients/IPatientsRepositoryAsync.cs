@@ -12,5 +12,7 @@ namespace Hospital.Core.Patients
         Task RemoveDoctorAsync(int patientId, int doctorId);
 
         Task<IEnumerable<T>> GetDoctorPatientsAsync(int doctorId);
+
+        Task<IEnumerable<T>> SearchAsync(string pattern);
     }
 }

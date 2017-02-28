@@ -29,5 +29,10 @@ namespace Hospital.Core.Doctors
         {
             throw new NotImplementedException();
         }
+
+        public Task<IEnumerable<DoctorDto>> SearchAsync(string pattern)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

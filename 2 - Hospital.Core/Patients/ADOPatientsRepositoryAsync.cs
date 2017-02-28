@@ -134,5 +134,27 @@ namespace Hospital.Core.Patients
                 return patients;
             }
         }
+
+        public async Task<IEnumerable<PatientDto>> SearchAsync(string pattern)
+        {
+            var patients = new List<PatientDto>();
+            string sql = "exec [dbo].[SearchPatients] @pattern";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("pattern", pattern);
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (reader.Read())
+                    {
+                        var patient = await ParserExtension.PatientParser(reader);
+                        patients.Add(patient);
+                    }
+                }
+                return patients;
+            }
+        }
     }
 }

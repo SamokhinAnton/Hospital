@@ -14,13 +14,11 @@ namespace Hospital.WebApp.Controllers
     public class DoctorsController : Controller
     {
         IDoctorsRepositoryAsync<DoctorDto> _doctorsRepository;
-        IPatientsRepositoryAsync<PatientDto> _patientsRepository;
         IDoctorServiceAsync<DoctorDto> _doctorService;
 
-        public DoctorsController(IDoctorsRepositoryAsync<DoctorDto> repository, IPatientsRepositoryAsync<PatientDto> patientsRepository, IDoctorServiceAsync<DoctorDto> doctorService)
+        public DoctorsController(IDoctorsRepositoryAsync<DoctorDto> repository, IDoctorServiceAsync<DoctorDto> doctorService)
         {
             this._doctorsRepository = repository;
-            this._patientsRepository = patientsRepository;
             this._doctorService = doctorService;
         }
 
@@ -94,6 +92,12 @@ namespace Hospital.WebApp.Controllers
         {
             await _doctorsRepository.DeleteAsync(id);
             var result = await _doctorsRepository.GetAllAsync();
+            return PartialView("_DoctorsPartial", result);
+        }
+
+        public async Task<ActionResult> Search(string pattern)
+        {
+            var result = await _doctorsRepository.SearchAsync(pattern);
             return PartialView("_DoctorsPartial", result);
         }
 

@@ -16,5 +16,7 @@ namespace Hospital.Core.Doctors
         Task AddDoctorToPatientAsync(int doctorId, int pacientId);
 
         Task RemovePatientAsync(int doctorId, int pacientId);
+
+        Task<IEnumerable<T>> SearchAsync(string pattern);
     }
 }

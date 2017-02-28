@@ -170,7 +170,7 @@ namespace Hospital.Core.Doctors
             }
         }
 
-        public async Task<IEnumerable<DoctorDto>> SearchDoctors(string pattern)
+        public async Task<IEnumerable<DoctorDto>> SearchAsync(string pattern)
         {
             var doctors = new List<DoctorDto>();
             string sql = "exec [dbo].[SearchDoctors] @pattern";
