@@ -24,8 +24,8 @@ namespace Hospital.Core.Diseases.Models
 
         public string ProfileName { get; set; }
 
-        public IEnumerable<PatientDto> Patients { get; set; }
+        public PatientDto Patients { get; set; }
 
-        public IEnumerable<DoctorDto> Doctors { get; set; }
+        public DoctorDto Doctors { get; set; }
     }
 }

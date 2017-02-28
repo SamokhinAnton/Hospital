@@ -87,5 +87,7 @@
     <Build Include="Programmability\Stored Procedures\CreateDisease.sql" />
     <Build Include="Programmability\Stored Procedures\CloseDisease.sql" />
     <Build Include="Programmability\Stored Procedures\GetDoctorDiseases.sql" />
+    <Build Include="Programmability\Stored Procedures\SearchDoctors.sql" />
+    <Build Include="Programmability\Stored Procedures\SearchPatients.sql" />
   </ItemGroup>
 </Project>

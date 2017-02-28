@@ -24,7 +24,7 @@
                 @if (ViewData["IsDoctorPage"] != null)
                 {
                     @Html.ActionLink("Details", "Details", "Patients", new { id = item.Id }, null) <text>|</text>
-                    @Html.ActionLink("Add Disease", "AddDisease", new { patientId = item.Id, doctorId = Url.RequestContext.RouteData.Values["id"] }) <text>|</text>
+                    @Html.ActionLink("Add Disease", "Create", "Diseases", new { patientId = item.Id, doctorId = Url.RequestContext.RouteData.Values["id"] }, null) <text>|</text>
                     @Ajax.ActionLink("Remove", "Remove",
                    new {
                        patientId = item.Id,

@@ -169,5 +169,27 @@ namespace Hospital.Core.Doctors
                 await command.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task<IEnumerable<DoctorDto>> SearchDoctors(string pattern)
+        {
+            var doctors = new List<DoctorDto>();
+            string sql = "exec [dbo].[SearchDoctors] @pattern";
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                command.CommandText = sql;
+                command.Parameters.AddWithValue("pattern", pattern);
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (reader.Read())
+                    {
+                        var doctor = await ParserExtension.DoctorParser(reader);
+                        doctors.Add(doctor);
+                    }
+                }
+                return doctors;
+            }
+        }
     }
 }

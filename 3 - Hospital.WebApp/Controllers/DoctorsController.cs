@@ -39,6 +39,8 @@ namespace Hospital.WebApp.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(DoctorDto doctor)
         {
+            if (!ModelState.IsValid)
+                return View(doctor);
             await _doctorsRepository.CreateAsync(doctor);
             return RedirectToAction("Index");
         }
@@ -53,6 +55,8 @@ namespace Hospital.WebApp.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(DoctorDto doctor)
         {
+            if (!ModelState.IsValid)
+                return View(doctor);
             await _doctorsRepository.UpdateAsync(doctor);
             return RedirectToAction("Index");
         }

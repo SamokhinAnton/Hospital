@@ -4,48 +4,50 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-         
-        <th>
-            @Html.DisplayNameFor(model => model.ProfileName)
-        </th>
-        
+        @if (ViewData["IsDoctorPage"] != null)
+        {
+            <th>
+                @Html.DisplayName("Patient name")
+            </th>
+        }
+        else
+        {
+            <th>
+                @Html.DisplayName("Doctor name")
+            </th>
+        }
         <th>
             @Html.DisplayNameFor(model => model.StartAt)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EndAt)
         </th>
-        <th></th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProfileName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartAt)
-        </td>
-        <td>
-            @if (!item.EndAt.HasValue)
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProfileName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartAt)
+            </td>
+            @if (!item.EndAt.HasValue && ViewData["IsDoctorPage"] != null)
             {
-                @Html.TextBoxFor(model => item.EndAt)
-            } else
-            { 
-                @Html.DisplayFor(modelItem => item.EndAt)
+                <td id="disease_@item.Id">
+                    @Ajax.ActionLink("Close", "Close", "Diseases", new { id = item.Id, doctorId = Url.RequestContext.RouteData.Values["id"] }, new AjaxOptions { UpdateTargetId = "disease_"+@item.Id, HttpMethod = "get", InsertionMode = InsertionMode.Replace, Confirm = "Do you want to close disease?" }, null)
+                </td>
             }
-        </td>
-        <td>
-            @if (!item.EndAt.HasValue)
+            else
             {
-                @Ajax.ActionLink("Close", "Close", "Diseases", new { id = item.Id  },  new AjaxOptions { HttpMethod = "post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "diseases" }, new { });
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndAt)
+                </td>
             }
-        </td>
-    </tr>
-}
-
+        </tr>
+    }
 </table>
