@@ -67,7 +67,7 @@ namespace Hospital.WebApp.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IDoctorsRepositoryAsync<DoctorDto>>().To<ADODoctorsRepositoryAsync>();
+            kernel.Bind<IDoctorsRepositoryAsync<DoctorDto>>().To<EFDoctorsRepositoryAsync>();
             kernel.Bind<IPatientsRepositoryAsync<PatientDto>>().To<ADOPatientsRepositoryAsync>();
             kernel.Bind<IPatientsServiceAsync<PatientDto>>().To<PatientsServiceAsync>();
             kernel.Bind<IDiseasesRepositoryAsync<DiseaseDto>>().To<ADODiseasesRepositoryAsync>();

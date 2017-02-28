@@ -7,9 +7,22 @@ using System.Threading.Tasks;
 
 namespace Hospital.Core.Doctors
 {
-    class EFDoctorsRepositoryAsync : RepositoryAsync<DoctorDto>,
+    public class EFDoctorsRepositoryAsync : RepositoryAsync<DoctorDto>,
         IDoctorsRepositoryAsync<DoctorDto>
     {
+        private HospitalContext context;
+        public EFDoctorsRepositoryAsync()
+        {
+            context = new HospitalContext();
+        }
+
+        public override async Task<IEnumerable<DoctorDto>> GetAllAsync()
+        {
+            var result = await Task.Run(() => context.Doctors.ToList());
+            return result;
+        }
+
+ 
         public Task AddDoctorToPatientAsync(int doctorId, int pacientId)
         {
             throw new NotImplementedException();

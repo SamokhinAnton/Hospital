@@ -2,6 +2,7 @@
 using Hospital.Core.Patients.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,11 @@ namespace Hospital.Core.Diseases.Models
 
         public DateTime? EndAt { get; set; }
 
+        [NotMapped]
         public string ProfileName { get; set; }
-
+        [ForeignKey("PatientId")]
         public PatientDto Patients { get; set; }
-
+        [ForeignKey("DoctorId")]
         public DoctorDto Doctors { get; set; }
     }
 }
