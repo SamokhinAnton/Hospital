@@ -26,6 +26,17 @@ namespace Hospital.Core
             modelBuilder.Entity<DoctorDto>().ToTable("Doctors");
             modelBuilder.Entity<PatientDto>().ToTable("Patients");
             modelBuilder.Entity<DiseaseDto>().ToTable("Diseases");
+
+            modelBuilder.Entity<DoctorDto>()
+                .HasMany<PatientDto>(d => d.Patients)
+                .WithMany(p => p.Doctors)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("DoctorId");
+                    cs.MapRightKey("PatientId");
+                    cs.ToTable("PatientsDoctors");
+                });
+
             base.OnModelCreating(modelBuilder);
         }
     }

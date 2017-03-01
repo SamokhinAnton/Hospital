@@ -30,8 +30,8 @@ namespace Hospital.Core.Doctors
         public async Task<DoctorDto> GetByIdAsync(int id)
         {
             var doctor = await _doctorsRepository.GetByIdAsync(id);
-            doctor.Patients = await _patientsRepository.GetDoctorPatientsAsync(id);
-            doctor.Diseases = await _diseasesRepository.GetDoctorDiseasesAsync(id);
+            doctor.Patients = (await _patientsRepository.GetDoctorPatientsAsync(id)).ToList();
+            doctor.Diseases = (await _diseasesRepository.GetDoctorDiseasesAsync(id)).ToList();
             return doctor;
         }
     }

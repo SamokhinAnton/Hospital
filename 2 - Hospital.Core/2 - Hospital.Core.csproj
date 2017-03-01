@@ -62,6 +62,7 @@
     <Compile Include="HospitalContext.cs" />
     <Compile Include="IRepositoryAsync.cs" />
     <Compile Include="Patients\ADOPatientsRepositoryAsync.cs" />
+    <Compile Include="Patients\EFPatientsRepositoryAsync.cs" />
     <Compile Include="Patients\IPatientsRepositoryAsync.cs" />
     <Compile Include="Patients\IPatientsServiceAsync.cs" />
     <Compile Include="Patients\Models\PatientDto.cs" />

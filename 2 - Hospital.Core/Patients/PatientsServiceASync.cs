@@ -29,8 +29,8 @@ namespace Hospital.Core.Patients
         public async Task<PatientDto> GetByIdAsync(int id)
         {
             var patient = await _patientsRepository.GetByIdAsync(id);
-            patient.Doctors = await _doctorsRepository.GetPatientDoctorsAsync(id);
-            patient.Diseases = await _diseasesRepository.GetPatientDiseasesAsync(id);
+            patient.Doctors = (await _doctorsRepository.GetPatientDoctorsAsync(id)).ToList();
+            patient.Diseases = (await _diseasesRepository.GetPatientDiseasesAsync(id)).ToList();
             return patient;
         }
     }

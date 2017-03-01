@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.Core.Diseases.Models
 {
+    [Table("Diseases")]
     public class DiseaseDto
     {
         public int Id { get; set; }
@@ -26,8 +27,8 @@ namespace Hospital.Core.Diseases.Models
         [NotMapped]
         public string ProfileName { get; set; }
         [ForeignKey("PatientId")]
-        public PatientDto Patients { get; set; }
+        public virtual PatientDto Patients { get; set; }
         [ForeignKey("DoctorId")]
-        public DoctorDto Doctors { get; set; }
+        public virtual DoctorDto Doctors { get; set; }
     }
 }
