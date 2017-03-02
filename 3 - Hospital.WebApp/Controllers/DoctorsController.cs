@@ -95,11 +95,11 @@ namespace Hospital.WebApp.Controllers
             return PartialView("_DoctorsPartial", result);
         }
 
+
         public async Task<ActionResult> Search(string pattern)
         {
             var result = await _doctorsRepository.SearchAsync(pattern);
             return PartialView("_DoctorsPartial", result);
         }
-
     }
 }

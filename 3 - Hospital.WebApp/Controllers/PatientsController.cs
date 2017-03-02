@@ -27,55 +27,39 @@ namespace Hospital.WebApp.Controllers
             return View(result);
         }
 
-        // GET: Patients/Details/5
         public async Task<ActionResult> Details(int id)
         {
             var result = await service.GetByIdAsync(id);
             return View(result);
         }
 
-        // GET: Patients/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Patients/Create
         [HttpPost]
         public async Task<ActionResult> Create(PatientDto patient)
         {
-            try
-            {
-                await repository.CreateAsync(patient);
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid)
+                return View(patient);
+            await repository.CreateAsync(patient);
+            return RedirectToAction("Index");
         }
 
-        // GET: Patients/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
             var result = await repository.GetByIdAsync(id);
             return View(result);
         }
 
-        // POST: Patients/Edit/5
         [HttpPost]
         public async Task<ActionResult> Edit(PatientDto patient)
         {
-            try
-            {
-                await repository.UpdateAsync(patient);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid)
+                return View(patient);
+            await repository.UpdateAsync(patient);
+            return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Remove(int patientId, int doctorId)

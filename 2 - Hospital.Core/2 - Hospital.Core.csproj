@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Diseases\ADODiseasesRepositoryAsync.cs" />
+    <Compile Include="Diseases\EFDiseasesRepositoryAsync.cs" />
     <Compile Include="Diseases\IDiseasesRepositoryAsync.cs" />
     <Compile Include="Diseases\Models\DiseaseDto.cs" />
     <Compile Include="Doctors\ADODoctorsRepositoryAsync.cs" />

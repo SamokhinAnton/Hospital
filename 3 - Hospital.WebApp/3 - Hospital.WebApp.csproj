@@ -169,6 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DiseasesController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -194,6 +195,7 @@
     <Content Include="Views\Shared\_DiseasesPartial.cshtml" />
     <Content Include="Views\Shared\_PatientsPartial.cshtml" />
     <Content Include="Views\Diseases\Create.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

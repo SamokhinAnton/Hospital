@@ -17,7 +17,7 @@ namespace Hospital.WebApp.Controllers
         {
             this._repository = repository;
         }
-        // GET: Diseases
+
         public async Task<ContentResult> Close(int id, int doctorId)
         {
             var endAt = DateTime.Now;
