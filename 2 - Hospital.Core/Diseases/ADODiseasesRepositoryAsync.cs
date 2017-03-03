@@ -67,7 +67,6 @@ namespace Hospital.Core.Diseases
             }
         }
 
-
         public async Task<IEnumerable<DiseaseDto>> GetDoctorDiseasesAsync(int doctorId)
         {
             var diseases = new List<DiseaseDto>();
@@ -89,6 +88,5 @@ namespace Hospital.Core.Diseases
                 return diseases;
             }
         }
-
     }
 }
